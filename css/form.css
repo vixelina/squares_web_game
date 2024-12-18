@@ -1,0 +1,33 @@
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 100px); 
+  width: 100%;
+  z-index: 1;
+}
+
+.center-content {
+  text-align: center;
+  padding: 2rem;
+  z-index: 1;
+}
+
+#username-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  z-index: 1;
+}
+
+#username-form input {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  z-index: 1;
+}
+
+#username-form button {
+  padding: 0.5rem 1rem;
+  z-index: 1;
+}

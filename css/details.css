@@ -1,0 +1,35 @@
+#gameCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    display: block;
+}
+
+#content {
+    position: relative;
+    z-index: 1;
+}
+
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 1000%;
+    height: 1000%;
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 0;
+    pointer-events: all;
+  }
+  
+  #overlay.disabled {
+    pointer-events: none;
+  }
+
+  .pagination {
+    margin-top: 20px;
+  }
+  
+  .pagination button {
+    margin: 0 5px;
+  }

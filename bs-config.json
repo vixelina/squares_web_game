@@ -1,0 +1,9 @@
+{
+  "port": 3000,
+  "server": {
+    "baseDir": "./"
+  },
+  "files": ["./index.html", "./src/**/*.*"],
+  "notify": false
+}
+  

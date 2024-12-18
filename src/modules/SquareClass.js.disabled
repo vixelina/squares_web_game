@@ -1,0 +1,77 @@
+import { updateSquarePosition, getSquare } from './data.js';
+
+const SQUARE_SIZE = 30;
+
+function randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+  
+function randomSpeed(min, max) {
+    let speed;
+    do {
+      speed = Math.random() * (max - min) + min;
+    } while (Math.abs(speed) < 0.1);
+    return speed;
+}
+
+class Square {
+    constructor(ctx, SCREEN_HEIGHT, SCREEN_WIDTH, index) {
+        this.index = index;
+        this.width = SQUARE_SIZE;
+        this.height = SQUARE_SIZE;
+        this.speedX = randomSpeed(-2, 2);
+        this.speedY = randomSpeed(-2, 2);
+        this.color = 'rgb(153, 60, 7)';
+        this.ctx = ctx;
+
+        const x = randomInt(1, SCREEN_WIDTH - SQUARE_SIZE/2 - 1);
+        const y = randomInt(1, SCREEN_HEIGHT - SQUARE_SIZE/2 - 1);
+        updateSquarePosition(index, x, y);
+    }
+  
+    isColliding(cursorX, cursorY, cursorSize) {
+        const cursorLeft = cursorX;
+        const cursorRight = cursorX + cursorSize;
+        const cursorTop = cursorY;
+        const cursorBottom = cursorY + cursorSize;
+    
+        const square = getSquare()[this.index];
+        const squareLeft = square.x;
+        const squareRight = square.x + this.width;
+        const squareTop = square.y;
+        const squareBottom = square.y + this.height;
+    
+        return !(cursorRight < squareLeft || cursorLeft > squareRight || cursorBottom < squareTop || cursorTop > squareBottom);
+    }
+    
+  
+    move(SCREEN_HEIGHT, SCREEN_WIDTH) {
+        const square = getSquare()[this.index];
+        square.x += this.speedX;
+        square.y += this.speedY;
+  
+        // if hit wall, bounce
+        if (square.x <= 0 || square.x + this.width >= SCREEN_WIDTH*2 - SQUARE_SIZE/2) {
+            this.speedX *= -1;
+        }
+        if (square.y <= 0 || square.y + this.height >= SCREEN_HEIGHT - SQUARE_SIZE/2) {
+            this.speedY *= -1;
+        }
+
+        updateSquarePosition(this.index, square.x, square.y);
+    }
+  
+    draw(cursorX, cursorY, cursorSize) {
+        const square = getSquare()[this.index];
+        if (this.isColliding(cursorX, cursorY, cursorSize)) {
+            this.color = 'rgb(241, 133, 10)';
+        } else {
+            this.color = 'rgb(153, 60, 7)';
+        }
+    
+        this.ctx.fillStyle = this.color;
+        this.ctx.fillRect(square.x, square.y, this.width, this.height);
+    }  
+}
+
+export default Square;
